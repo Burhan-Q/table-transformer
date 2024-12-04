@@ -5,6 +5,8 @@ from collections import defaultdict
 
 from fitz import Rect
 
+from grits import iou
+
 
 def apply_threshold(objects, threshold):
     """
@@ -29,20 +31,6 @@ def apply_class_thresholds(bboxes, labels, scores, class_names, class_thresholds
     labels = [labels[idx] for idx in indices_above_threshold]
 
     return bboxes, scores, labels
-
-
-def iou(bbox1, bbox2):
-    """
-    Compute the intersection-over-union of two bounding boxes.
-    """
-    intersection = Rect(bbox1).intersect(bbox2)
-    union = Rect(bbox1).include_rect(bbox2)
-    
-    union_area = union.get_area()
-    if union_area > 0:
-        return intersection.get_area() / union.get_area()
-    
-    return 0
 
 
 def iob(bbox1, bbox2):

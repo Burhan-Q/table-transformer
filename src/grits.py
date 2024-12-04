@@ -227,12 +227,9 @@ def iou(bbox1, bbox2):
     Compute the intersection-over-union of two bounding boxes.
     """
     intersection = Rect(bbox1).intersect(bbox2)
-    union = Rect(bbox1).include_rect(bbox2)
-    
-    union_area = union.get_area()
+    union_area = Rect(bbox1).get_area() + Rect(bbox2).get_area() - intersection.get_area()
     if union_area > 0:
-        return intersection.get_area() / union.get_area()
-    
+        return intersection.get_area() / union_area
     return 0
 
 
